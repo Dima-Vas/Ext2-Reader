@@ -1,44 +1,35 @@
-<mark>Template for your README. Remove all unused parts and instructions</mark>
-
-# Lab work <mark>NUMBER</mark>: <mark>SHORT TOPIC</mark>
-Authors (team): <mark>AUTHORS WITH GITHUB LINKS</mark><br>
-Variant: <mark>VARIANT SHOULD BE HERE</mark>
+# Lab work <mark>7</mark>: <mark>Робота із бінарними даними на прикладі читання образу диску ext2 FS</mark>
+Author: <mark>Dmytro Vasylkiv [Dima-Vas](https://github.com/Dima-Vas)</mark><br>
+Variant: <mark>ext2fs</mark>
 ## Prerequisites
 
-<mark>LIST LIBRARIES/TOOLS/OTHER UTILITIES THAT NEED TO BE INSTALLED (E.G. GCC, OPENMP, CMAKE ETC)</mark>
+<mark>gcc >= 11.4</mark>
+
+<mark>cmake >= 3.22.1</mark>
 
 ### Compilation
 
-<mark>HOW TO COMPILE YOUR PROGRAM? (RECOMMENDED: ./comile.sh)</mark>
+Use CMake : 
 
-### Installation
+<code>cmake -S . -B ./cmake/build</code> 
 
-<mark>DESCRIBE THE INSTALLATION PROCESS (USE ./dependencies FOLDER)</mark>
+<code>cd ./cmake/build</code> 
 
-<mark>Note: For Python scripts, You must add `requirenments.txt` 
-file and add your env to the `.gitignore` file!</mark>
+<code>make</code> 
 
 ### Usage
 
-<mark>PROVIDE AN EXAMPLE OF HOW TO RUN YOUR PROGRAM (IT CAN BE A_flag COMMAND LINE WITH INPUT AND EXPECTED OUTPUT)</mark>
+<code>ext2_reader IMGPATH [-v]</code>
 
-<mark>Note: if your project needs or generates any data, media and so on -- put them
-into the data folder</mark> 
+<code>-v</code> flag displays the whole info about file as required by task.
+
+Non-verbose mode will simply print all the files and directories recursively
 
 ### Important!
-
-<mark>WHAT ELSE SHOULD WE KNOW ABOUT YOUR WORK? (E.G. KNOWN ISSUES, BUGS, SPECIAL BEHAVIOR ETC)</mark>
+- Verbose output is designed for at least 150-characters-wide terminal window
 
 ### Results
-
-<mark>DESCRIBE THE RESULTS OF THE WORK YOU DID. WHAT DID YOU LEARN OR FIND INTERESTING?</mark>
+Learned that five minutes of reading the documentation may end the five-hour session of pain. RTFM.
 
 # Additional tasks
-<mark>IF APPLICABLE, LIST ALL THE EXTRA FEATURES YOU ADDED. PROVIDE DETAILS<mark>
-
-# ATTENTION!
-  
-Additional tasks not listed in the previous paragraph would not be graded.
-
-Be sure to provide a complete list of authors.
-
+- Рекурсивно вивести всі файли в образі
