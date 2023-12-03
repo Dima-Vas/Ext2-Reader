@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "int-ll64.h": "c",
+        "superblock.h": "c",
+        "blockdescriptor.h": "c",
+        "cmath": "c",
+        "directory.h": "c",
+        "random": "c",
+        "dirent.h": "c",
+        "typeinfo": "c"
+    }
+}
