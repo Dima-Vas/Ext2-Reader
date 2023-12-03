@@ -55,7 +55,7 @@ include(cmake/CompilerWarnings.cmake)
 ##########################################################
 
 #! Project main executable source compilation
-add_executable(${PROJECT_NAME} main.c SuperBlock.h InfoPrint.h)
+add_executable(${PROJECT_NAME} main.c)
 target_link_libraries(${PROJECT_NAME} PRIVATE m)
 #! Put path to your project headers
 
@@ -66,9 +66,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE m)
 # Define ALL_TARGETS variable to use in PVS and Sanitizers
 set(ALL_TARGETS ${PROJECT_NAME})
 set(CMAKE_BUILD_TYPE Debug)
-set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
-
-target_compile_features(${PROJECT_NAME} PUBLIC c_std_99)
 
 # Include CMake setup
 include(cmake/main-config.cmake)

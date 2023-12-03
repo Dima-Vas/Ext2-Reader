@@ -3,9 +3,12 @@
 #ifndef INFO_PRINT_H
 #define INFO_PRINT_H
 #include <stdio.h>
+#include <time.h>
 #include "SuperBlock.h"
 #include "BlockDescriptor.h"
 #include "Directory.h"
+#include "main.h"
+#include <asm-generic/int-ll64.h>
 
 void SuperBlockPrint(struct SuperBlock* superblock) {
     printf("Inodes count: %u\n", superblock->s_inodes_count);
@@ -61,19 +64,43 @@ void BlockDescriptorPrint(struct BlockDescriptor* blockdescriptor) {
 }
 
 void printDirectory(struct Directory* dir, char* path) {
+    struct Inode* inode = malloc(sizeof(struct Inode));
 
+    long offset = SIZE_BLOCK * BLOCKDESCRIPTOR->bg_inode_table + SIZE_INODE * (dir->inode - 1);
+    if (fseek(image, offset, SEEK_SET) != 0) {
+        perror("Error while looking for inode block");
+        exit(EXIT_FAILURE);
+    }
+    if (fread(inode, 1, SIZE_STRUCT_INODE, image) != SIZE_STRUCT_INODE) {
+        perror("Incorrect size of inode read");
+        exit(EXIT_FAILURE);
+    }
+
+    __u64 file_size = ((__u64)inode->i_size_hi << 32) | inode->i_size_lo;
+    time_t creation_time = inode->i_ctime;
+    time_t last_access_time = inode->i_atime;
+    
     printf("%s/%s", path, dir->name);
-    int i = strlen(dir->name) + strlen(path);
-    if (i > 100) {
-        printf("h");
+    if (verbose) {
+        int i = strlen(dir->name) + strlen(path);
+        while (i < 80) {
+            printf(" ");
+            i++;
+        }
+        dir->file_type == 2 ? printf("*  ") : printf("f  ");
+        printf("  %u  ", dir->inode);
+        printf("  %o  ", inode->i_mode);
+        printf("  %llu  ", file_size);
+        printf("  %d  ", inode->i_links_count);
+        printf("  %d  ", inode->i_flags);
+        printf("  %d  ", inode->i_block[0]);
+        printf("  %s  ", ctime(&creation_time));
+        printf("  %s  \n", ctime(&last_access_time));
+    } else {
+        printf("\n");
     }
-    while(i < 100) {
-        printf(" ");
-        i++;
-    }
-    dir->file_type == 2 ? printf("*  ") : printf("f  ");
-    printf("    %u  \n", dir->inode);
-
+    
+    free(inode);
 }
 
 #endif

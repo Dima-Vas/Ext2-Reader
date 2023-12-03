@@ -10,25 +10,12 @@
 #include "BlockDescriptor.h"
 #include "Inode.h"
 #include "Directory.h"
+#include "main.h"
 
 #define ROOT_INODE 2
 #define FILE_ENTRY 1
 #define DIR_ENTRY 2
 #define DIRECT_BLOCKS 11
-
-size_t SIZE_SUPERBLOCK      = sizeof(struct SuperBlock);
-size_t SIZE_BLOCKDESCRIPTOR = sizeof(struct BlockDescriptor);
-size_t SIZE_STRUCT_INODE    = sizeof(struct Inode);
-size_t SIZE_DIRECTORY       = sizeof(struct Directory);
-
-size_t SIZE_BLOCK;
-size_t SIZE_INODE;
-char* BLOCK;
-
-struct SuperBlock*      SUPERBLOCK;
-struct BlockDescriptor* BLOCKDESCRIPTOR;
-
-FILE* image;
 
 // reads directory entry from the block from current offset
 int read_dirent(struct Directory* dir, char* img, size_t* curr_offset) {
@@ -120,12 +107,8 @@ void recurse(struct Inode* inode, char* datablock, char* curr_path) {
         }
     }
     free(dir);
-    if (subdir_inodes != NULL) {
-        free(subdir_inodes);
-    }
-    if (new_curr_path != NULL) {
-        free(new_curr_path);
-    }
+    free(subdir_inodes);
+    free(new_curr_path);
     for (__u32 i = 0; i < curr_subdir_path_ptr; i++) {
         free(subdir_paths[i]);
     }
@@ -136,6 +119,7 @@ void recurse(struct Inode* inode, char* datablock, char* curr_path) {
 // root data is on 0xA5000
 int main(int argc, char* argv[]) {
     char* image_path = argv[1];
+    verbose = argc > 2 && !strcmp("-v", argv[2]);
 
     SUPERBLOCK      = malloc(SIZE_SUPERBLOCK);
     BLOCKDESCRIPTOR = malloc(SIZE_BLOCKDESCRIPTOR);
@@ -216,13 +200,15 @@ int main(int argc, char* argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    printf("\nNAME  TYPE    INODE   SIZE\n");
+    printf("\nNAME                                                      TYPE   INODE   MODE   SIZE   LINKS   FLAGS   FIRSTBLOCK   CREATEDAT   ACCESSEDAT\n");
     recurse(INODE, BLOCK, "");
+    printf("\nNAME                                                      TYPE   INODE   MODE   SIZE   LINKS   FLAGS   FIRSTBLOCK   CREATEDAT   ACCESSEDAT\n");
 
     free(SUPERBLOCK);
     free(BLOCKDESCRIPTOR);
     free(INODE);
     free(DIRECTORY);
     free(BLOCK);
+    fclose(image);
     return 0;
 }

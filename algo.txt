@@ -1,2 +1,0 @@
-read the dir -> read all the entrires -> print the data about the file 
--> |if directory then read the block pointed by inode in entry and repeat|
