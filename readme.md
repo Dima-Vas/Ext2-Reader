@@ -1,6 +1,5 @@
-# Lab work <mark>7</mark>: <mark>Робота із бінарними даними на прикладі читання образу диску ext2 FS</mark>
-Author: <mark>Dmytro Vasylkiv [Dima-Vas](https://github.com/Dima-Vas)</mark><br>
-Variant: <mark>ext2fs</mark>
+This is my UCU laboratory code for working with binary data using pure C. The folder structure was provided by the UCU CS classroom, and I am the author of all the C code and CMakeLists.txt. Feel free to use and modify them with no licensing concerns.
+
 ## Prerequisites
 
 <mark>gcc >= 11.4</mark>
@@ -21,15 +20,9 @@ Use CMake :
 
 <code>ext2_reader IMGPATH [-v]</code>
 
-<code>-v</code> flag displays the whole info about file as required by task.
+<code>-v</code> flag displays the whole info about file.
 
 Non-verbose mode will simply print all the files and directories recursively
 
 ### Important!
 - Verbose output is designed for at least 150-characters-wide terminal window
-
-### Results
-Learned that five minutes of reading the documentation may end the five-hour session of pain. RTFM.
-
-# Additional tasks
-- Рекурсивно вивести всі файли в образі
